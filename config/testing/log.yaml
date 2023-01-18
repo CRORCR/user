@@ -1,0 +1,3 @@
+log:
+  level: "trace" # 日志输出级别
+  max_day: 10 # 文件保存时间
