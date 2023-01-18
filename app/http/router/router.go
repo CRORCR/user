@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/CRORCR/user/app/http/api"
+	middleware2 "github.com/CRORCR/user/app/http/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
