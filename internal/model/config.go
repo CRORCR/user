@@ -30,8 +30,7 @@ type LogConfig struct {
 
 // RpcConfig rpc.yaml
 type RpcConfig struct {
-	Url     string `yaml:"url"`
-	UserApi string `yaml:"user_api"`
+	Port string `yaml:"port"`
 }
 
 // RedisConfig redis.yaml

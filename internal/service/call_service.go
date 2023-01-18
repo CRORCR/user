@@ -1,52 +1,23 @@
 package service
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/CRORCR/user/internal/config"
-	"github.com/CRORCR/user/internal/grpc"
-	"github.com/CRORCR/user/internal/model"
-	"github.com/gin-gonic/gin"
+	callPrice "github.com/CRORCR/duoo-common/proto/call_price"
 )
 
-type UserService struct {
-	conf *config.Configuration
-	rpc  *grpc.RpcService
+type userService struct {
 }
 
-func NewUserService(conf *config.Configuration, rpcService *grpc.RpcService) *UserService {
-	return &UserService{
-		conf: conf,
-		rpc:  rpcService,
-	}
-}
+var UserService *userService
 
 // CallPrice 获取主播私聊价格
-func (s *UserService) CallPrice(ctx *gin.Context, uid int64) *model.CallPriceResp {
-	resp := &model.CallPriceResp{
-		PriceCoins: make(map[int64]int64),
-	}
-	resp.PriceCoins[uid] = 12
+func (s *userService) CallPrice(ctx context.Context, req *callPrice.GetPriceReq) (resp *callPrice.GetPriceResp, err error) {
+	fmt.Println("收到请求：", req.Uid, ctx.Value("hello"))
+	resp = new(callPrice.GetPriceResp)
+	data := &callPrice.GetPriceResp_Data{Uid: "123", Date: "2023-01-18"}
+	resp.Data = append(resp.Data, data)
 
-	result, err := s.rpc.GetTransferLogResult(ctx, uid)
-	fmt.Println("打印结果", result, err)
-
-	return resp
-}
-
-// CallPrice 获取主播私聊价格
-func (s *UserService) CallPriceList(ctx *gin.Context, uids []int64) *model.CallPriceResp {
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Println("居然有错误", err)
-		}
-	}()
-	resp := &model.CallPriceResp{
-		PriceCoins: make(map[int64]int64),
-	}
-	for _, uid := range uids {
-		resp.PriceCoins[uid] = 1234
-	}
-
-	return resp
+	return resp, nil
 }
