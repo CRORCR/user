@@ -18,7 +18,6 @@ func main() {
 	config := config.InitConfig()
 	contract.NewLogger(config.Conf.Log)
 
-	contract.CreateRedisConnection(config.Conf.Redis)
 	addr := fmt.Sprintf(":%s", config.Conf.Rpc.Port)
 
 	log.Printf("server listen address in %s \n", addr)
